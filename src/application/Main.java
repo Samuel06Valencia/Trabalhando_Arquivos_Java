@@ -8,31 +8,19 @@ public class Main {
         //Segunda versão, leitura manual.
 
         String path = "D:\\temp\\in.txt"; //String com caminho do arquivo.
-        FileReader fr = null; //Classe padrão para ler uma stream de dados.
-        BufferedReader br = null; //Gerencia a memória usada para leitura,classe otimizada.
 
-        try {
-            fr = new FileReader(path);
-            br = new BufferedReader(fr);
+        try(BufferedReader br = new BufferedReader(new FileReader(path))) { //(try with resources,permite instanciar recursos na linha do try, fazendo com que esses recursos sejam desalocados de forma automatizada quando o escopo do try acabar.
 
-            //Leitura linha a linha
-            String line = br.readLine(); //Faz leitura do arquivo até a quebra de linha e devolve uma string com essa leitura.
-            while(line != null) { //Enquanto essa linha for diferente de nulo.
+            String line = br.readLine();
+            while(line != null) {
                 System.out.println(line);
                 line = br.readLine();
             }
+
+            br.close();
         }
         catch(IOException e) {
-            System.out.println("Error: "+ e.getMessage());
-        }
-        finally {
-            try {
-                br.close();
-                fr.close();
-            }
-            catch(IOException e) {
-               e.printStackTrace();
-            }
+            System.out.println("Error: "+e.getMessage());
         }
 
     }

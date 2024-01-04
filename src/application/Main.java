@@ -1,32 +1,37 @@
 package application;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        //Segunda versão, leitura manual.
 
+        String path = "D:\\temp\\in.txt"; //String com caminho do arquivo.
+        FileReader fr = null; //Classe padrão para ler uma stream de dados.
+        BufferedReader br = null; //Gerencia a memória usada para leitura,classe otimizada.
 
-        File file = new File("D:\\temp\\in.txt");
-        Scanner sc = null; //Criado antes do bloco try, para poder ser instanciado no bloco "finally".
         try {
-            sc = new Scanner(file); //Scanner tbm funciona para ler arquivos
-            //Lógica para ler arquivo linha a linha.
-            while(sc.hasNextLine()) { //retorna verdadeiro se não chegou no fim do arquivo,enquanto não chegar no fim do arquivo,continue lendo.
-                String line = sc.nextLine(); //Lê a linha, e posciona o curso para a próxima.
-                System.out.println(line); //imprime a linha.
+            fr = new FileReader(path);
+            br = new BufferedReader(fr);
 
-                //ou se quiser economizar: System.out.println(sc.nextLine());
+            //Leitura linha a linha
+            String line = br.readLine(); //Faz leitura do arquivo até a quebra de linha e devolve uma string com essa leitura.
+            while(line != null) { //Enquanto essa linha for diferente de nulo.
+                System.out.println(line);
+                line = br.readLine();
             }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
         }
-        finally {  //Executa,mesmo ocorrendo exceções.
-            //Fechamento de recursos,sempre declare no bloco "finally"
-            if (sc != null) {
-                sc.close(); //Tem que fechar o recurso, senão irá provocar um vazamento de memória na aplicação.
+        catch(IOException e) {
+            System.out.println("Error: "+ e.getMessage());
+        }
+        finally {
+            try {
+                br.close();
+                fr.close();
+            }
+            catch(IOException e) {
+               e.printStackTrace();
             }
         }
 

@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        //Segunda versão, leitura manual.
+        //Terceira versão, leitura automatizada.
 
         String path = "D:\\temp\\in.txt"; //String com caminho do arquivo.
 
